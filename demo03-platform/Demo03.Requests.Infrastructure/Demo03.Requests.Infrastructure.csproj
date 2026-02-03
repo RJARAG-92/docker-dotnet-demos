@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Demo03.Requests.Application\Demo03.Requests.Application.csproj" />
+    <ProjectReference Include="..\Demo03.Requests.Domain\Demo03.Requests.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Messaging\" />
+    <Folder Include="Caching\" />
+    <Folder Include="Persistence\" />
+  </ItemGroup>
+
+</Project>
