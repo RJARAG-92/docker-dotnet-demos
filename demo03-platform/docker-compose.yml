@@ -1,0 +1,98 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: demo03-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: demo03db
+      POSTGRES_USER: demo03user
+      POSTGRES_PASSWORD: demo03pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - demo03_pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: demo03-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: demo03-mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+ 
+  redis:
+    image: redis:7-alpine
+    container_name: demo03-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: demo03-redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+      
+  worker:
+    build:
+      context: .
+      dockerfile: src/Demo03.Notifications.Worker/Dockerfile
+    container_name: demo03-worker
+    restart: unless-stopped
+    environment:
+      RabbitMq__HostName: ${RABBITMQ__HOSTNAME}
+      RabbitMq__Port: ${RABBITMQ__PORT}
+      RabbitMq__UserName: ${RABBITMQ__USERNAME}
+      RabbitMq__Password: ${RABBITMQ__PASSWORD}
+      RabbitMq__Exchange: ${RABBITMQ__EXCHANGE}
+      RabbitMq__Queue: ${RABBITMQ__QUEUE}
+      RabbitMq__RoutingKey: ${RABBITMQ__ROUTINGKEY}
+
+      Postgres__ConnectionString: ${CONNECTIONSTRINGS__DEFAULT}
+
+      Smtp__Host: ${SMTP__HOST}
+      Smtp__Port: ${SMTP__PORT}
+      Smtp__From: ${SMTP__FROM}
+      Smtp__To: ${SMTP__TO}
+    depends_on:
+      - rabbitmq
+      - postgres
+      - mailhog
+      
+  api:
+    build:
+      context: .
+      dockerfile: src/Demo03.Requests.Api/Dockerfile
+    container_name: demo03-api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+
+      ConnectionStrings__Default: ${CONNECTIONSTRINGS__DEFAULT}
+
+      RabbitMq__HostName: ${RABBITMQ__HOSTNAME}
+      RabbitMq__Port: ${RABBITMQ__PORT}
+      RabbitMq__UserName: ${RABBITMQ__USERNAME}
+      RabbitMq__Password: ${RABBITMQ__PASSWORD}
+      RabbitMq__Exchange: ${RABBITMQ__EXCHANGE}
+      
+      Cache__Redis: ${CACHE__REDIS}
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+
+volumes:
+  demo03_pgdata:
