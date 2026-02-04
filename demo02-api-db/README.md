@@ -162,3 +162,11 @@ Este demo prioriza **claridad arquitectónica y foco en infraestructura**, dejan
 frameworks más pesados (como EF Core) para escenarios más complejos.
 
 Es la **base natural** para el siguiente demo orientado a arquitectura enterprise.
+
+---
+
+## 👤 Autor
+**Ricardo Jara Gaspar**  
+Ingeniero de Software especializado en .NET y Arquitectura de Software  
+🔗 [GitHub](https://github.com/RJARAG-92) · [LinkedIn](https://www.linkedin.com/in/ricardojarag) · 🇵🇪 Perú
+

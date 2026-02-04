@@ -2,7 +2,7 @@
 
 Este repositorio contiene una serie de **demos progresivos** orientados a demostrar el uso de **Docker**, **Docker Compose** y **.NET 8**, aplicando buenas prácticas de **arquitectura de software**, configuración externa y diseño limpio.
 
-El objetivo no es solo “hacer que funcione”, sino **mostrar criterio técnico y evolución arquitectónica**, desde un contenedor simple hasta sistemas más completos.
+El objetivo no es solo “hacer que funcione”, sino **mostrar criterio técnico y evolución arquitectónica**, desde un contenedor simple hasta una **plataforma distribuida basada en DDD**.
 
 ---
 
@@ -10,10 +10,11 @@ El objetivo no es solo “hacer que funcione”, sino **mostrar criterio técnic
 
 - Comprender y aplicar **contenedorización con Docker**
 - Construir aplicaciones **portables y reproducibles**
-- Separar responsabilidades entre **aplicación e infraestructura**
+- Orquestar múltiples servicios con **Docker Compose**
+- Separar responsabilidades entre **aplicación, dominio e infraestructura**
 - Aplicar principios de la **12-Factor App**
+- Introducir **DDD, CQRS y arquitectura orientada a eventos**
 - Demostrar progresión técnica hacia un **perfil de Arquitecto de Software**
-
 ---
 
 ## 🧩 Demos incluidas (avance actual)
@@ -61,6 +62,40 @@ El objetivo no es solo “hacer que funcione”, sino **mostrar criterio técnic
 
 👉 Este demo consolida el uso real de Docker en un escenario cercano a producción.
 
+--- 
+
+### ✅ Demo 3 – Plataforma distribuida con DDD, eventos y Worker
+📁 `demo03-platform/`
+
+**Qué demuestra:**
+- **Domain-Driven Design (DDD)** con dominio como núcleo
+- **Clean Architecture** con dependencias hacia adentro
+- **CQRS** (Commands & Queries)
+- **Arquitectura orientada a eventos**
+- **Worker asíncrono** desacoplado de la API
+- **Auditoría de negocio (Audit Trail)**
+- **Cache distribuido con Redis**
+- **Mensajería con RabbitMQ**
+- **Migraciones automáticas con EF Core**
+- **Despliegue completo con Docker Compose**
+
+**Arquitectura:**
+- API HTTP (.NET 8)
+- Worker independiente (.NET 8)
+- PostgreSQL (persistencia)
+- Redis (cache)
+- RabbitMQ (mensajería)
+- MailHog (SMTP de pruebas)
+
+**Conceptos clave:**
+- Dominio independiente de frameworks
+- Casos de uso como orquestadores
+- Side-effects procesados fuera del request HTTP
+- Idempotencia en procesamiento asíncrono
+- Infraestructura declarativa y reproducible
+
+👉 Este demo representa un **salto arquitectónico**, mostrando cómo diseñar, desplegar y operar una solución distribuida real.
+
 ---
 
 ## 🏗️ Estructura del repositorio
@@ -70,6 +105,8 @@ docker-dotnet-demos/
 ├─ demo01-api-only/
 │ └─ README.md
 ├─ demo02-api-db/
+│ └─ README.md
+├─ demo03-platform/
 │ └─ README.md
 └─ README.md ← (este archivo)
 ```
@@ -85,11 +122,15 @@ Cada demo es **independiente**, ejecutable y documentado.
   - Configuración por variables de entorno
   - Servicios externos desacoplados
 - **Stateless services**
-- **Separación de responsabilidades**
 - **Infraestructura como código (local)**
-- **Evitar sobreingeniería**
+- **Separación clara de responsabilidades**
+- **DDD (Domain-Driven Design)**
+  - Dominio como núcleo
+  - Infraestructura como detalle
+- **Arquitectura orientada a eventos**
+- **Evolución progresiva, sin sobreingeniería**
 - **Elección consciente de herramientas**
-  - EF Core se reserva para demos más avanzados
+  - EF Core introducido solo cuando el dominio lo justifica
 
 ---
 
@@ -104,3 +145,12 @@ Ejemplo:
 ```bash
 cd demo02-api-db
 docker compose up --build
+```
+
+---
+
+## 👤 Autor
+**Ricardo Jara Gaspar**  
+Ingeniero de Software especializado en .NET y Arquitectura de Software  
+🔗 [GitHub](https://github.com/RJARAG-92) · [LinkedIn](https://www.linkedin.com/in/ricardojarag) · 🇵🇪 Perú
+
