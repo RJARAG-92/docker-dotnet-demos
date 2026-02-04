@@ -185,6 +185,14 @@ Las dependencias siguen la regla:
 
 ---
 
+### 🗄️ Inicialización de la base de datos (Migraciones)
+
+La creación del esquema de base de datos se gestiona mediante **migraciones de Entity Framework Core**.
+
+> La base de datos es creada por el contenedor de PostgreSQL al iniciar el entorno.
+> El esquema (tablas, índices y relaciones) se gestiona mediante migraciones aplicadas por la API.
+
+---
 ## 🐳 Despliegue completo con Docker Compose (ENFOQUE PRINCIPAL)
 
 La solución está diseñada para ejecutarse **completamente mediante Docker Compose**, levantando **toda la plataforma con un solo comando**, sin instalaciones locales adicionales.
